@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Terrain {
 
-  public static final int DEFAULT_SIZE = 50;
+  public static final int DEFAULT_SIZE = 22;
   private static final int[][] NEIGHBOR_OFFSET = {
           {-1, 0},
     {0, -1},    {0, 1},
@@ -60,5 +60,26 @@ public class Terrain {
 
   public long getIterations() {
     return iterations;
+  }
+
+  /**
+   * Select number of random pairs and swaps the two members in each pair.
+   * @param pairs
+   */
+  public void mix(int pairs) {
+    Breed switchTemp;
+    int switchFirstRow;
+    int switchSecondRow;
+    int switchFirstCol;
+    int switchSecondCol;
+    for (int i = 0; i < pairs; i++) {
+      switchFirstRow = rng.nextInt(cells.length);
+      switchSecondRow = rng.nextInt(cells.length);
+      switchFirstCol = rng.nextInt(cells[switchFirstRow].length);
+      switchSecondCol = rng.nextInt(cells[switchFirstCol].length);
+      switchTemp = cells[switchFirstRow][switchFirstCol];
+      cells[switchFirstRow][switchFirstCol] = cells[switchSecondRow][switchSecondCol];
+      cells[switchSecondRow][switchSecondCol] = switchTemp;
+    }
   }
 }

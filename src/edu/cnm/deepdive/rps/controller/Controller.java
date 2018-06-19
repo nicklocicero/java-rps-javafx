@@ -55,8 +55,8 @@ public class Controller {
     terrain = new Terrain(new Random());
     defaultViewWidth = terrainView.getWidth();
     defaultViewHeight = terrainView.getHeight();
-    fitViewWidth = viewScroller.getWidth();
-    fitViewHeight = viewScroller.getHeight();
+    fitViewWidth = viewScroller.getPrefWidth();
+    fitViewHeight = viewScroller.getPrefHeight();
     iterationFormat = iterationsLable.getText();
     terrainView.setSource(terrain.getCells());
     draw();
@@ -125,12 +125,13 @@ public class Controller {
     public void run() {
       while (running) {
         synchronized (lock) {
+          terrain.mix(100);
           terrain.iterate(STEPS_PER_ITERATION);
         }
         try {
           Thread.sleep(1 + MAX_SLEEP_PER_ITERATION - (long) speedSlider.getValue());
         } catch (InterruptedException e) {
-          // DANCE AROUND AND DON'T FIX NOTHIN!
+          // DANCE AROUND! (not gonna fix it)
         }
       }
     }
