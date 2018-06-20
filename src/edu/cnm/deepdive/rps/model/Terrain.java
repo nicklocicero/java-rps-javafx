@@ -1,11 +1,10 @@
 package edu.cnm.deepdive.rps.model;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class Terrain {
 
-  public static final int DEFAULT_SIZE = 22;
+  public static final int DEFAULT_SIZE = 16;
   private static final int[][] NEIGHBOR_OFFSET = {
           {-1, 0},
     {0, -1},    {0, 1},
@@ -15,6 +14,7 @@ public class Terrain {
   private Breed[][] cells;
   private Random rng;
   private long iterations;
+  private long[] count = {0, 0, 0};
 
   public Terrain(Random rng) {
     this.rng = rng;
@@ -45,6 +45,14 @@ public class Terrain {
       }
     }
     iterations += steps;
+    for (int i = 0; i < count.length; i++) {
+      count[i] = 0;
+    }
+    for (int i = 0; i < cells.length; i++) {
+      for (int j = 0; j < cells[i].length; j++) {
+        count[cells[i][j].ordinal()] += 1;
+      }
+    }
   }
 
   protected int[] getRandomNeighbor(int row, int col) {
@@ -60,6 +68,9 @@ public class Terrain {
 
   public long getIterations() {
     return iterations;
+  }
+  public long[] getCount() {
+    return count;
   }
 
   /**

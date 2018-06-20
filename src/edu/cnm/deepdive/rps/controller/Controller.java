@@ -16,8 +16,10 @@ import javafx.scene.text.Text;
 
 public class Controller {
 
-  private static final int STEPS_PER_ITERATION = 10;
+  private static final int STEPS_PER_ITERATION = 100;
   private static final long MAX_SLEEP_PER_ITERATION = 10;
+  @FXML
+  private Text colorsLabel;
   @FXML
   private ResourceBundle resources;
   @FXML
@@ -44,6 +46,7 @@ public class Controller {
   private double fitViewHeight;
   private double fitViewWidth;
   private String iterationFormat;
+  private String colorsFormat;
   private Terrain terrain;
   private boolean running;
   private Runner runner;
@@ -58,6 +61,7 @@ public class Controller {
     fitViewWidth = viewScroller.getPrefWidth();
     fitViewHeight = viewScroller.getPrefHeight();
     iterationFormat = iterationsLable.getText();
+    colorsFormat = colorsLabel.getText();
     terrainView.setSource(terrain.getCells());
     draw();
     timer = new Timer();
@@ -108,6 +112,8 @@ public class Controller {
     synchronized (lock) {
       terrainView.draw();
       iterationsLable.setText(String.format(iterationFormat, terrain.getIterations() / 1000));
+      colorsLabel.setText(String.format(colorsFormat,
+          terrain.getCount()[0], terrain.getCount()[1], terrain.getCount()[2]));
     }
   }
 
@@ -125,7 +131,7 @@ public class Controller {
     public void run() {
       while (running) {
         synchronized (lock) {
-          terrain.mix(100);
+          terrain.mix((terrain.getCells().length / 100 * (int) mixingSlider.getValue()));
           terrain.iterate(STEPS_PER_ITERATION);
         }
         try {

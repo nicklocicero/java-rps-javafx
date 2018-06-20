@@ -63,7 +63,11 @@
     GridPane.columnIndex="0"
     GridPane.columnSpan="3"
     GridPane.halignment="CENTER"
-    GridPane.valignment="TOP">
+    GridPane.valignment="TOP"
+    prefWidth="600"
+    prefHeight="600"
+    hbarPolicy="NEVER"
+    vbarPolicy="NEVER">
 
     <TerrainView
       fx:id="terrainView"
@@ -99,15 +103,15 @@
 
   <Slider
     fx:id="mixingSlider"
-    min="0"
+    min="1"
     max="100"
-    majorTickUnit="10"
+    majorTickUnit="1"
     minorTickCount="0"
     snapToTicks="true"
     showTickMarks="true"
     showTickLabels="false"
-    blockIncrement="10"
-    value="0"
+    blockIncrement="1"
+    value="1"
     maxWidth="180"
     GridPane.rowIndex="3"
     GridPane.columnIndex="1"
@@ -122,6 +126,13 @@
     GridPane.columnIndex="1"
     GridPane.halignment="CENTER"
     GridPane.valignment="BOTTOM" />
+
+  <Text
+  fx:id="colorsLabel"
+  GridPane.rowIndex="2"
+  GridPane.columnIndex="2"
+  GridPane.valignment="BASELINE"
+  text="%colors_text" />
 
   <Button
     fx:id="start"
